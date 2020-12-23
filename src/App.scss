@@ -1,0 +1,26 @@
+.container {
+  .header {
+    margin: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .button-row {
+    margin: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    button {
+      width: 300px;
+      height:40px;
+      border-radius:10px;
+      background-color: transparent;
+      border: none;
+      font-size:20px;
+      padding: 0px;
+      box-shadow: none;
+    }
+  }
+
+}
