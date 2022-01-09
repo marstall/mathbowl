@@ -57,17 +57,14 @@ export default function MathBowl() {
             }}
           />
           <div className={styles.title}>Math Bowl</div>
-
           <div className={styles.statusBar}>
             <div className={styles.score}>{score}</div>
             <div className={styles.timer}>{timer}</div>
           </div>
-
           <Problem
             onRef={problemRef}
             seed={seed}
             onSolution={() => {
-              console.log("onSolution");
               setScore((score) => score + 1); // + 10 * places + Math.pow(10, terms));
               setSeed((seed) => ++seed);
             }}

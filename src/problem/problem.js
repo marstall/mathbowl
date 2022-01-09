@@ -226,7 +226,7 @@ export function Problem(props) {
       <div
         style={{
           margin: 24,
-          display: "flex",
+          display: "none",
           flexDirection: "row",
           justifyContent: "center",
         }}
