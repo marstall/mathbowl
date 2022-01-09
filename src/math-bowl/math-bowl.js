@@ -39,7 +39,7 @@ export default function MathBowl() {
         seed={seed}
         onSolution={() => {
           console.log("onSolution");
-          setScore((score) => score); // + 10 * places + Math.pow(10, terms));
+          setScore((score) => score + 1); // + 10 * places + Math.pow(10, terms));
           setSeed((seed) => ++seed);
         }}
         operand={"+"}
