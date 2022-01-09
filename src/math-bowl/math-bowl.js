@@ -6,14 +6,14 @@ import styles from "./math-bowl.module.scss";
 export default function MathBowl() {
   const places = 2;
   const terms = 2;
-  const inc = 10;
+  const inc = places * terms;
   const problemRef = useRef(null);
   const [nums, setNums] = useState([]);
   const [seed, setSeed] = useState(new Date().getTime());
   const [score, setScore] = useState(0);
   const [timer, setTimer] = useState(5 * 60);
   const [complete, setComplete] = useState(false);
-  const [started, setStarted] = useState(false);
+  const [started, setStarted] = useState(true);
 
   function countDown() {
     setTimer((timer) => timer - 1);
@@ -42,6 +42,10 @@ export default function MathBowl() {
       {!started ? (
         <div className={styles.startScreen}>
           <div className={styles.title}>Math Bowl</div>
+          <div className={styles.copy}>
+            How many 2 digit addition problems can <b>you</b> complete in 5
+            minutes?
+          </div>
           <button onClick={() => setStarted(true)}>start</button>
         </div>
       ) : complete ? (
@@ -69,13 +73,14 @@ export default function MathBowl() {
             onRef={problemRef}
             seed={seed}
             onSolution={() => {
-              setScore((score) => score + 1); // + 10 * places + Math.pow(10, terms));
+              setScore((score) => score + inc); // + 10 * places + Math.pow(10, terms));
               setSeed((seed) => ++seed);
             }}
             operand={"+"}
             places={places}
             terms={terms}
             nums={nums}
+            inc={inc}
           />
           <DigitPicker onNumClick={(n) => setNums((nums) => [...nums, n])} />
         </div>

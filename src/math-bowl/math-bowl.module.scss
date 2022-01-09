@@ -12,8 +12,11 @@
     align-items: center;
     font-weight: bold;
     color: black;
+    .copy {
+      font-weight: normal;
+    }
     .title {
-      margin-top: 90px;
+      margin-top: 60px;
       font-size: 50px;
     }
     button {

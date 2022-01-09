@@ -1,0 +1,101 @@
+.zoomOut {
+  animation-duration: 0.3s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-name: zoomOut;
+}
+
+@keyframes zoomOut {
+  from {
+    opacity:1;
+    transform: scale(1);
+  }
+  99% {
+    opacity: 0;
+    transform: scale(1.5);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+}
+
+.zoomIn {
+  animation-duration: 0.5s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-name: zoomIn;
+}
+
+@keyframes zoomIn {
+  from {
+    opacity:0;
+    transform: scale(0.5);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.bigScoreZoomIn {
+  animation-duration: 0.5s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-name: bigScoreZoomIn;
+}
+
+@keyframes bigScoreZoomIn {
+  from {
+    opacity:0;
+    transform: scale(0.5);
+  }
+  10% {
+    opacity: 1;
+  }
+  98% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  99% {
+    opacity:0;
+  }
+  to {
+    transform: scale(0.5);
+  }
+}
+
+
+.fadeOut {
+  animation-duration: 0.5s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-name: fadeOut;
+}
+
+@keyframes fadeOut {
+  from {
+    opacity:1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+
+.fadeIn {
+  animation-duration: 0.5s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  animation-name: fadeIn;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity:1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+

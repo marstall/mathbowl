@@ -1,7 +1,8 @@
 import styles from "./problem.module.scss";
+import animationStyles from "./animations.module.scss";
 import { useEffect, useRef, useState } from "react";
 import { clog, numToPlaces, rndWithPlaces, times } from "../helpers";
-
+import classNames from "classnames";
 const profiles = {
   "+": {
     formula: (...terms) =>
@@ -27,6 +28,7 @@ export function Problem(props) {
     onSolution,
     operand,
     places,
+    inc,
     terms: numTerms = 2,
   } = props;
   const numAnswerPlaces = profiles[operand].numAnswerPlaces(places, numTerms);
@@ -38,6 +40,8 @@ export function Problem(props) {
   const [savedSequence, setSavedSequence] = useState(sequence);
   const [savedNums, setSavedNums] = useState(nums);
   const [solved, setSolved] = useState(false);
+  const [animations, setAnimations] = useState({});
+
   const [answerPlaceValues, setAnswerPlaceValues] = useState(
     new Array(numAnswerPlaces)
   );
@@ -77,16 +81,13 @@ export function Problem(props) {
   useEffect(() => {
     console.log({ seed });
     const terms = times(numTerms, () => rndWithPlaces(seed, places));
-    console.log({ terms });
 
     const realAnswer = profiles[operand].formula(...terms);
-    console.log({ realAnswer });
 
     setRealAnswer(realAnswer);
     setAnswerPlaceValues(new Array(numAnswerPlaces));
     setCarryPlaceValues(new Array(numCarryPlaces));
     const realAnswerPlaceValues = numToPlaces(realAnswer);
-    clog({ realAnswerPlaceValues });
     setRealAnswerPlaceValues(realAnswerPlaceValues);
     setTerms(terms);
   }, [seed]);
@@ -114,17 +115,13 @@ export function Problem(props) {
   useEffect(() => {
     setSelectedCellIndex((selectedCellIndex) => {
       if (placeSolved(selectedCellIndex)) {
-        clog("solved");
         if (placeCarries(selectedCellIndex)) {
-          clog("carries");
           setSelectedCarryCellIndex(selectedCellIndex - 2);
           return null;
         } else {
-          clog("nocarry");
           if (selectedCellIndex > 0) return selectedCellIndex - 1;
         }
       } else {
-        clog("notsolved");
         return selectedCellIndex;
       }
     });
@@ -142,69 +139,101 @@ export function Problem(props) {
   useEffect(() => {
     if (solved) {
       setTimeout(() => {
-        onSolution();
-        setSelectedCellIndex(numAnswerPlaces - 1);
-        setSolved(false);
-      }, 1000);
+        setAnimations((animations) => ({
+          ...animations,
+          problem: "zoomOut",
+          bigScore: "bigScoreZoomIn",
+        }));
+        setTimeout(() => {
+          onSolution();
+          setSelectedCellIndex(numAnswerPlaces - 1);
+          setSolved(false);
+          setAnimations((animations) => ({
+            ...animations,
+            bigScore: null,
+            problem: "zoomIn",
+          }));
+        }, 500);
+      }, 500);
     }
   }, [solved]);
   return (
     <>
       <div
         className={styles.container}
-        style={{
-          transform: solved ? "scale(10)" : null,
-          opacity: solved ? 0 : 1,
-        }}
+        // style={{
+        //   transform: solved ? "scale(10)" : null,
+        //   opacity: solved ? 0 : 1,
+        // }}
       >
         <div className={styles.problem}>
-          <div className={styles.leftExpression}>
-            <div className={styles.carryRow}>
-              {times(numCarryPlaces, (i) => (
-                <div
-                  onClick={() => {
-                    setSelectedCarryCellIndex(i);
-                    setSelectedCellIndex(null);
-                  }}
-                  className={styles.carryValue}
-                  style={{
-                    border: selectedCarryCellIndex === i && "2px solid black",
-                  }}
-                >
-                  {carryPlaceValues[i]}
+          <div className={animationStyles[animations["problem"]]}>
+            <div className={styles.leftExpression}>
+              <div className={styles.carryRow}>
+                {times(numCarryPlaces, (i) => (
+                  <div
+                    onClick={() => {
+                      setSelectedCarryCellIndex(i);
+                      setSelectedCellIndex(null);
+                    }}
+                    className={styles.carryValue}
+                    style={{
+                      border: selectedCarryCellIndex === i && "2px solid black",
+                    }}
+                  >
+                    {carryPlaceValues[i]}
+                  </div>
+                ))}
+              </div>
+              {terms.map((term, i) => (
+                <div className={styles.term}>
+                  {i > 0 && <div className={styles.operand}>{operand}</div>}
+                  {numToPlaces(term).map((placeValue) => (
+                    <div className={styles.placeValue}>{placeValue}</div>
+                  ))}
                 </div>
               ))}
             </div>
-            {terms.map((term, i) => (
-              <div className={styles.term}>
-                {i > 0 && <div className={styles.operand}>{operand}</div>}
-                {numToPlaces(term).map((placeValue) => (
-                  <div className={styles.placeValue}>{placeValue}</div>
-                ))}
-              </div>
-            ))}
-          </div>
-          <div className={styles.rightExpression}>
-            {times(numAnswerPlaces, (i) => (
+            <div className={styles.rightExpression}>
               <div
-                onClick={() => {
-                  setNoTapsYet(false);
-                  setSelectedCellIndex(i);
-                  setSelectedCarryCellIndex(null);
-                }}
-                className={styles.answerPlaceValue}
+                className={styles.check}
                 style={{
-                  border: selectedCellIndex === i && "2px solid black",
-                  backgroundColor: placeAnswered(i)
-                    ? placeSolved(i)
-                      ? "lightgreen"
-                      : "red"
-                    : "transparent",
+                  opacity: solved ? 1 : 0,
+                  transform: solved ? "scale(1)" : "scale(0.5)",
+                  transition: "all 250ms",
                 }}
               >
-                {answerPlaceValues[i]}
+                ✅
               </div>
-            ))}
+              {times(numAnswerPlaces, (i) => (
+                <div
+                  onClick={() => {
+                    setNoTapsYet(false);
+                    setSelectedCellIndex(i);
+                    setSelectedCarryCellIndex(null);
+                  }}
+                  className={styles.answerPlaceValue}
+                  style={{
+                    border: selectedCellIndex === i && "2px solid black",
+                    backgroundColor: placeAnswered(i)
+                      ? placeSolved(i)
+                        ? "lightgreen"
+                        : "red"
+                      : "transparent",
+                  }}
+                >
+                  {answerPlaceValues[i]}
+                </div>
+              ))}
+            </div>
+          </div>
+          <div
+            className={classNames(
+              styles.bigScore,
+              animationStyles[animations["bigScore"]]
+            )}
+          >
+            +{inc}
           </div>
         </div>
       </div>
