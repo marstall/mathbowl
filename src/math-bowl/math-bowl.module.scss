@@ -1,4 +1,50 @@
 .container {
+  .startScreen {
+    position: absolute;
+    left:0;
+    right:0;
+    top:0;
+    bottom:0;
+    background-color: lavender;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    align-items: center;
+    font-weight: bold;
+    color: black;
+    .title {
+      margin-top: 90px;
+      font-size: 50px;
+    }
+    button {
+      border: 1px solid black;
+    }
+  }
+  .complete {
+    position: absolute;
+    left:0;
+    right:0;
+    top:0;
+    bottom:0;
+    background-color: lavender;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    align-items: center;
+    font-weight: bold;
+    color: black;
+    .msg1 {
+      font-size: 36px;
+    }
+    .msg2 {
+      font-size: 24px;
+    }
+    .score {
+      margin-left: 24px;
+      color:magenta;
+      font-size: 96px;
+    }
+  }
   .title {
     position: absolute;
     top: 0;
@@ -36,15 +82,3 @@
 
 }
 
-button {
-  width: 300px;
-  height:40px;
-  border-radius:10px;
-  background-color: transparent;
-  border: none;
-  font-size:20px;
-  padding: 0px;
-  box-shadow: none;
-  cursor: pointer;
-
-}

@@ -11,43 +11,74 @@ export default function MathBowl() {
   const [nums, setNums] = useState([]);
   const [seed, setSeed] = useState(new Date().getTime());
   const [score, setScore] = useState(0);
-  const [timer, setTimer] = useState(60 * 5);
+  const [timer, setTimer] = useState(5 * 60);
+  const [complete, setComplete] = useState(false);
+  const [started, setStarted] = useState(false);
+
   function countDown() {
     setTimer((timer) => timer - 1);
   }
+
   useEffect(() => {
-    setInterval(countDown, 1000);
-    return clearInterval(countDown);
-  }, []);
+    if (timer <= 0) {
+      clearInterval(countDown);
+      setComplete(true);
+    }
+  }, [timer]);
+
+  useEffect(() => {
+    if (started) {
+      setInterval(countDown, 1000);
+      return clearInterval(countDown);
+    }
+  }, [started]);
+
   return (
     <div className={styles.container}>
-      <div
-        className={styles.progressBar}
-        style={{
-          width: "50%",
-        }}
-      />
-      <div className={styles.title}>Math Bowl</div>
+      {!started ? (
+        <div className={styles.startScreen}>
+          <div className={styles.title}>Math Bowl</div>
+          <button onClick={() => setStarted(true)}>start</button>
+        </div>
+      ) : complete ? (
+        <div className={styles.complete}>
+          <div className={styles.msg1}>countdown complete!</div>
+          <div>
+            <div className={styles.msg2}>final score</div>
+            <div className={styles.score}>{score}</div>
+          </div>
+        </div>
+      ) : (
+        <div>
+          <div
+            className={styles.progressBar}
+            style={{
+              width: "50%",
+            }}
+          />
+          <div className={styles.title}>Math Bowl</div>
 
-      <div className={styles.statusBar}>
-        <div className={styles.score}>{score}</div>
-        <div className={styles.timer}>{timer}</div>
-      </div>
+          <div className={styles.statusBar}>
+            <div className={styles.score}>{score}</div>
+            <div className={styles.timer}>{timer}</div>
+          </div>
 
-      <Problem
-        onRef={problemRef}
-        seed={seed}
-        onSolution={() => {
-          console.log("onSolution");
-          setScore((score) => score + 1); // + 10 * places + Math.pow(10, terms));
-          setSeed((seed) => ++seed);
-        }}
-        operand={"+"}
-        places={places}
-        terms={terms}
-        nums={nums}
-      />
-      <DigitPicker onNumClick={(n) => setNums((nums) => [...nums, n])} />
+          <Problem
+            onRef={problemRef}
+            seed={seed}
+            onSolution={() => {
+              console.log("onSolution");
+              setScore((score) => score + 1); // + 10 * places + Math.pow(10, terms));
+              setSeed((seed) => ++seed);
+            }}
+            operand={"+"}
+            places={places}
+            terms={terms}
+            nums={nums}
+          />
+          <DigitPicker onNumClick={(n) => setNums((nums) => [...nums, n])} />
+        </div>
+      )}
     </div>
   );
 }
