@@ -20,6 +20,10 @@ export default function MathBowl() {
   }
 
   useEffect(() => {
+    window.scrollTo(0, 1);
+  }, []);
+
+  useEffect(() => {
     if (timer <= 0) {
       clearInterval(countDown);
       setComplete(true);

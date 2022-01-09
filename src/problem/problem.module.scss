@@ -3,6 +3,11 @@
   --grid-height: 88px;
   --grid-margin: 5px;
 }
+@media only screen and (max-width: 600px) {
+  :root {
+    --grid-height: 68px;
+  }
+}
 
   .gridElement {
     font-family: monospace;

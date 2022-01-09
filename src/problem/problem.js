@@ -51,37 +51,22 @@ export function Problem(props) {
 
   function placeSolved(i) {
     if (!realAnswerPlaceValues) return false;
-    // clog("answerPlaceValues", answerPlaceValues);
-    // clog("realAnswerPlaceValues", realAnswerPlaceValues);
-    // clog({ i });
-    // console.log(answerPlaceValues[i], realAnswerPlaceValues[i]);
     const real =
       answerPlaceValues.length > realAnswerPlaceValues.length
         ? [undefined, ...realAnswerPlaceValues]
         : realAnswerPlaceValues;
-    // clog("real", real);
     const ret = answerPlaceValues[i] === real[i];
-    // clog({ ret });
     return ret;
   }
 
   function placeCarries(i) {
-    clog("placeCarries?");
     if (i < 2) return false;
     const termIndex = i - (numAnswerPlaces - places);
 
     const tot = terms
       .map((term) => numToPlaces(term)[termIndex])
       .reduce((acc, i) => acc + i, 0);
-    clog("terms", terms);
-    clog(numToPlaces(terms[0])[termIndex]);
-    clog({
-      i,
-      places,
-      numAnswerPlaces,
-      termIndex,
-      tot,
-    });
+
     return tot >= 10;
   }
 
