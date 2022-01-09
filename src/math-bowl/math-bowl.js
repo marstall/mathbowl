@@ -13,7 +13,7 @@ export default function MathBowl() {
   const [score, setScore] = useState(0);
   const [timer, setTimer] = useState(5 * 60);
   const [complete, setComplete] = useState(false);
-  const [started, setStarted] = useState(true);
+  const [started, setStarted] = useState(false);
 
   function countDown() {
     setTimer((timer) => timer - 1);
@@ -42,10 +42,7 @@ export default function MathBowl() {
       {!started ? (
         <div className={styles.startScreen}>
           <div className={styles.title}>Math Bowl</div>
-          <div className={styles.copy}>
-            How many 2 digit addition problems can <b>you</b> complete in 5
-            minutes?
-          </div>
+          <div className={styles.copy}>2 digit addition: the speed trial</div>
           <button onClick={() => setStarted(true)}>start</button>
         </div>
       ) : complete ? (
