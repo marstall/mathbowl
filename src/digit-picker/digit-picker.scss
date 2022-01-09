@@ -1,0 +1,46 @@
+.container {
+  margin-top: 4px;
+  display: flex;
+  justify-content: center;
+  .numbers {
+width: 300px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-column-gap: 8px;
+    grid-row-gap: 8px;
+    .num {
+      font-family: monospace;
+      padding: 10px ;
+      display: flex;
+      justify-content: center;
+      font-size:28px;
+      border-radius: 4px;
+      background-color: lavender;
+      border: 2px solid lavender;
+      cursor: pointer;
+    }
+    .num:hover {
+      opacity: 0.7;
+    }
+  }
+  .clear {
+    margin: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+  }
+}
+
+button {
+  width: 300px;
+  height:40px;
+  border-radius:10px;
+  background-color: transparent;
+  border: none;
+  font-size:20px;
+  padding: 0px;
+  box-shadow: none;
+  cursor: pointer;
+
+}

@@ -1,14 +1,12 @@
-import './App.scss';
-import React, {useState,useEffect} from 'react'
+import "./App.module.scss";
+import React, { useState, useEffect } from "react";
 import NumbersInSpace from "./NumbersInSpace/numbers-in-space";
-
+import MathBowl from "./math-bowl/math-bowl";
+import styles from "./App.module.scss";
 function App() {
   return (
-    <div className="container">
-<div className='header'>
-  Numbers in Space
-</div>
-      <NumbersInSpace/>
+    <div className={styles.container}>
+      <MathBowl />
     </div>
   );
 }

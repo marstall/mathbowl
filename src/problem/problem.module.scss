@@ -1,0 +1,72 @@
+:root {
+  --grid-width: 55px;
+  --grid-height: 55px;
+  --grid-margin: 5px;
+}
+
+  .gridElement {
+    font-family: monospace;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size:28px;
+    border-radius: 4px;
+    //background-color: #ffc;
+    border: 2px solid lavender;
+    cursor: pointer;
+    margin:var(--grid-margin);
+    width:var(--grid-width);
+    height: var(--grid-height);
+  }
+
+  .container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    transition: all 400ms;
+    transform: scale(1);
+    .problem {
+      .leftExpression {
+        border-bottom: 4px solid black;
+
+        .term {
+          display: flex;
+          flex-direction: row;
+          justify-content: flex-end;
+
+          .placeValue {
+            @extend .gridElement
+          }
+
+          .operand {
+            @extend .gridElement;
+            justify-content: flex-end;
+            font-size: 45px;
+            border: 0px;
+          }
+        }
+        .carryRow {
+          @extend .term;
+          justify-content: flex-start;
+          margin-left: calc(var(--grid-width) + (var(--grid-margin) * 3));
+
+          .carryValue {
+            @extend .gridElement;
+            border: 2px solid transparent;
+            border-bottom: 2px solid lavender;
+            border-radius: 0;
+          }
+        }
+      }
+      .rightExpression {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        .answerPlaceValue {
+          @extend .gridElement
+
+        }
+      }
+    }
+  }
+
